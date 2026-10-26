@@ -1,0 +1,54 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1500" height="912" viewBox="0 0 1500 912" font-family="Helvetica, Arial, sans-serif">
+<defs><marker id="a" markerWidth="10" markerHeight="8" refX="9" refY="4" orient="auto"><path d="M0,0 L10,4 L0,8 z" fill="#2B2F33"/></marker></defs>
+<rect width="1500" height="912" fill="#FFFFFF"/>
+<line x1="130" y1="104" x2="130" y2="892" stroke="#B3AFA7" stroke-width="2" stroke-dasharray="6 6"/>
+<rect x="20" y="40" width="220" height="64" rx="10" fill="#F28C28"/>
+<text x="130" y="67" text-anchor="middle" fill="#fff" font-size="17" font-weight="700">App Android</text>
+<text x="130" y="89" text-anchor="middle" fill="#fff" font-size="14" font-weight="400">(HCE, Kotlin)</text>
+<line x1="378" y1="104" x2="378" y2="892" stroke="#B3AFA7" stroke-width="2" stroke-dasharray="6 6"/>
+<rect x="268" y="40" width="220" height="64" rx="10" fill="#86827B"/>
+<text x="378" y="67" text-anchor="middle" fill="#fff" font-size="17" font-weight="700">Lector PN532</text>
+<text x="378" y="89" text-anchor="middle" fill="#fff" font-size="14" font-weight="400">(ISO 14443-A)</text>
+<line x1="626" y1="104" x2="626" y2="892" stroke="#B3AFA7" stroke-width="2" stroke-dasharray="6 6"/>
+<rect x="516" y="40" width="220" height="64" rx="10" fill="#3A3F44"/>
+<text x="626" y="67" text-anchor="middle" fill="#fff" font-size="17" font-weight="700">Arduino Nano ESP32</text>
+<text x="626" y="89" text-anchor="middle" fill="#fff" font-size="14" font-weight="400">(ScannerHTTP.ino)</text>
+<line x1="874" y1="104" x2="874" y2="892" stroke="#B3AFA7" stroke-width="2" stroke-dasharray="6 6"/>
+<rect x="764" y="40" width="220" height="64" rx="10" fill="#3C873A"/>
+<text x="874" y="67" text-anchor="middle" fill="#fff" font-size="17" font-weight="700">Servidor Node.js</text>
+<text x="874" y="89" text-anchor="middle" fill="#fff" font-size="14" font-weight="400">/api/scanner</text>
+<line x1="1122" y1="104" x2="1122" y2="892" stroke="#B3AFA7" stroke-width="2" stroke-dasharray="6 6"/>
+<rect x="1012" y="40" width="220" height="64" rx="10" fill="#00758F"/>
+<text x="1122" y="67" text-anchor="middle" fill="#fff" font-size="17" font-weight="700">MySQL</text>
+<text x="1122" y="89" text-anchor="middle" fill="#fff" font-size="14" font-weight="400">(tabla user)</text>
+<line x1="1370" y1="104" x2="1370" y2="892" stroke="#B3AFA7" stroke-width="2" stroke-dasharray="6 6"/>
+<rect x="1260" y="40" width="220" height="64" rx="10" fill="#5B5FC7"/>
+<text x="1370" y="67" text-anchor="middle" fill="#fff" font-size="17" font-weight="700">Panel web</text>
+<text x="1370" y="89" text-anchor="middle" fill="#fff" font-size="14" font-weight="400">(WebSocket /ws)</text>
+<rect x="20" y="120" width="716" height="36" rx="6" fill="#FFF3E6" stroke="#F28C28"/>
+<text x="32" y="144" font-size="15" fill="#1F2225">Previo: login contra la API de la práctica 2 → setUserId(id) guarda el ID en SharedPreferences</text>
+<line x1="626" y1="200" x2="384" y2="200" stroke="#2B2F33" stroke-width="2" marker-end="url(#a)"/>
+<text x="502.0" y="191" text-anchor="middle" font-size="15" fill="#1F2225" stroke="#fff" stroke-width="5" paint-order="stroke">1. InListPassiveTarget (readPassiveTargetID)</text>
+<line x1="378" y1="256" x2="136" y2="256" stroke="#2B2F33" stroke-width="2" marker-end="url(#a)"/>
+<text x="254.0" y="247" text-anchor="middle" font-size="15" fill="#1F2225" stroke="#fff" stroke-width="5" paint-order="stroke">2. Activación ISO/IEC 14443-A (anticolisión, UID aleatorio)</text>
+<line x1="626" y1="312" x2="136" y2="312" stroke="#2B2F33" stroke-width="2" marker-end="url(#a)"/>
+<text x="378.0" y="303" text-anchor="middle" font-size="15" fill="#1F2225" stroke="#fff" stroke-width="5" paint-order="stroke">3. C-APDU SELECT AID: 00 A4 04 00 05 F0 12 34 56 78 00</text>
+<path d="M130,354 h40 v22 h-36" fill="none" stroke="#2B2F33" stroke-width="2" marker-end="url(#a)"/>
+<text x="180" y="370" font-size="15" fill="#1F2225">4. HostApduService valida AID, lee ID, vibra, emite evento</text>
+<line x1="130" y1="424" x2="620" y2="424" stroke="#2B2F33" stroke-width="2" stroke-dasharray="8 5" marker-end="url(#a)"/>
+<text x="378.0" y="415" text-anchor="middle" font-size="15" fill="#1F2225" stroke="#fff" stroke-width="5" paint-order="stroke">5. R-APDU: [ID 4 bytes little-endian] 90 00  (p. ej. BC 0B 00 00 90 00)</text>
+<path d="M626,466 h40 v22 h-36" fill="none" stroke="#2B2F33" stroke-width="2" marker-end="url(#a)"/>
+<text x="676" y="482" font-size="15" fill="#1F2225">6. SW1 = 0x90 → memcpy(&amp;id, userId, 4) → id = 3004</text>
+<line x1="626" y1="536" x2="868" y2="536" stroke="#2B2F33" stroke-width="2" marker-end="url(#a)"/>
+<text x="750.0" y="527" text-anchor="middle" font-size="15" fill="#1F2225" stroke="#fff" stroke-width="5" paint-order="stroke">7. HTTP GET /api/scanner?id=3004&amp;token=code37</text>
+<line x1="874" y1="592" x2="1116" y2="592" stroke="#2B2F33" stroke-width="2" marker-end="url(#a)"/>
+<text x="998.0" y="583" text-anchor="middle" font-size="15" fill="#1F2225" stroke="#fff" stroke-width="5" paint-order="stroke">8. SELECT id, username, ..., status FROM user WHERE id = ?</text>
+<line x1="1122" y1="648" x2="880" y2="648" stroke="#2B2F33" stroke-width="2" stroke-dasharray="8 5" marker-end="url(#a)"/>
+<text x="998.0" y="639" text-anchor="middle" font-size="15" fill="#1F2225" stroke="#fff" stroke-width="5" paint-order="stroke">9. fila del usuario (status)</text>
+<line x1="874" y1="704" x2="632" y2="704" stroke="#2B2F33" stroke-width="2" stroke-dasharray="8 5" marker-end="url(#a)"/>
+<text x="750.0" y="695" text-anchor="middle" font-size="15" fill="#1F2225" stroke="#fff" stroke-width="5" paint-order="stroke">10. &quot;si&quot; (status = active)  /  &quot;no&quot;</text>
+<line x1="874" y1="760" x2="1364" y2="760" stroke="#2B2F33" stroke-width="2" marker-end="url(#a)"/>
+<text x="1122.0" y="751" text-anchor="middle" font-size="15" fill="#1F2225" stroke="#fff" stroke-width="5" paint-order="stroke">11. JSON del usuario (o {id, status:&#x27;unknown&#x27;})</text>
+<path d="M626,802 h40 v22 h-36" fill="none" stroke="#2B2F33" stroke-width="2" marker-end="url(#a)"/>
+<text x="676" y="818" font-size="15" fill="#1F2225">12. LED verde (si) / LED rojo (no), 500 ms</text>
+</svg>
