@@ -1,0 +1,51 @@
+{
+  "expo": {
+    "name": "CNC Credencial",
+    "slug": "cnc-credencial",
+    "version": "1.0.0",
+    "scheme": "cnccredencial",
+    "platforms": [
+      "android"
+    ],
+    "orientation": "portrait",
+    "icon": "./assets/icon.png",
+    "userInterfaceStyle": "light",
+    "android": {
+      "package": "com.concretos.credencial",
+      "adaptiveIcon": {
+        "backgroundColor": "#2B2F33",
+        "foregroundImage": "./assets/android-icon-foreground.png"
+      },
+      "predictiveBackGestureEnabled": false,
+      "blockedPermissions": [
+        "android.permission.READ_EXTERNAL_STORAGE",
+        "android.permission.WRITE_EXTERNAL_STORAGE"
+      ]
+    },
+    "plugins": [
+      "expo-router",
+      "expo-status-bar",
+      "expo-secure-store",
+      "expo-image",
+      [
+        "expo-splash-screen",
+        {
+          "image": "./assets/splash-icon.png",
+          "imageWidth": 180,
+          "backgroundColor": "#2B2F33"
+        }
+      ],
+      [
+        "./modules/nfc-credencial/app.plugin.js",
+        {
+          "serviceDescription": "Credencial del Congreso Nacional sobre Concretos",
+          "aidDescription": "Gafete de acceso CNC"
+        }
+      ],
+      "expo-font"
+    ],
+    "experiments": {
+      "typedRoutes": true
+    }
+  }
+}

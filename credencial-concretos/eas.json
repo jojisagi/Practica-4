@@ -1,0 +1,29 @@
+{
+  "cli": {
+    "version": ">= 16.0.0",
+    "appVersionSource": "local"
+  },
+  "build": {
+    "development": {
+      "developmentClient": true,
+      "distribution": "internal",
+      "android": {
+        "buildType": "apk"
+      },
+      "env": {
+        "EXPO_PUBLIC_API_URL": "https://TODO-PEGAR-URL-DE-LA-API",
+        "EXPO_PUBLIC_LOGIN_PATH": "/api/login"
+      }
+    },
+    "preview": {
+      "distribution": "internal",
+      "android": {
+        "buildType": "apk"
+      },
+      "env": {
+        "EXPO_PUBLIC_API_URL": "https://TODO-PEGAR-URL-DE-LA-API",
+        "EXPO_PUBLIC_LOGIN_PATH": "/api/login"
+      }
+    }
+  }
+}

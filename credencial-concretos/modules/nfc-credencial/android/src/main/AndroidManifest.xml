@@ -1,0 +1,5 @@
+<!-- El servicio HCE, los permisos y el XML del AID los agrega el config plugin
+     (modules/nfc-credencial/app.plugin.js) al manifest de la app. -->
+<manifest>
+
+</manifest>

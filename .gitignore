@@ -1,0 +1,8 @@
+# Android Studio / IntelliJ
+.idea/
+
+# macOS
+.DS_Store
+
+# archivos temporales de Word
+~$*
