@@ -11,8 +11,9 @@
         "buildType": "apk"
       },
       "env": {
-        "EXPO_PUBLIC_API_URL": "https://TODO-PEGAR-URL-DE-LA-API",
-        "EXPO_PUBLIC_LOGIN_PATH": "/api/login"
+        "EXPO_PUBLIC_API_URL": "https://monsterballgo.com/api",
+        "EXPO_PUBLIC_LOGIN_PATH": "/login",
+        "EXPO_PUBLIC_API_TOKEN": "code37"
       }
     },
     "preview": {
@@ -21,8 +22,9 @@
         "buildType": "apk"
       },
       "env": {
-        "EXPO_PUBLIC_API_URL": "https://TODO-PEGAR-URL-DE-LA-API",
-        "EXPO_PUBLIC_LOGIN_PATH": "/api/login"
+        "EXPO_PUBLIC_API_URL": "https://monsterballgo.com/api",
+        "EXPO_PUBLIC_LOGIN_PATH": "/login",
+        "EXPO_PUBLIC_API_TOKEN": "code37"
       }
     }
   }

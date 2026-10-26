@@ -1,5 +1,8 @@
+import { CryptoDigestAlgorithm, digestStringAsync } from 'expo-crypto';
+
 import {
   API_BASE_URL,
+  API_TOKEN,
   DEMO_LOGIN_ENABLED,
   DEMO_USER_ID,
   LOGIN_FIELDS,
@@ -44,13 +47,10 @@ function pickString(...values: unknown[]): string | null {
 /**
  * Convierte la respuesta del login al formato que usa la app.
  *
- * TODO(equipo): ajustar a la respuesta real de la API de la práctica 2.
- * Por ahora acepta varias formas comunes:
- *   { id, first_name, last_name, pfp_url, token }
- *   { user: { id, first_name, last_name, pfp_url }, token }
- *   { data: { ... }, access_token }
- * Los campos first_name / last_name / pfp_url coinciden con la tabla `user` que
- * consulta el servidor del profesor (server/scanner.js).
+ * Respuesta real de MonsterBallGo (práctica 2); el id llega como cadena:
+ *   { "username": "pocoyo", "id": "999989", "firstname": "Paco", "lastname": "Yopo",
+ *     "email": "...", "xp": "0", "credits": "0", "pfp_url": "https://..." }
+ * También acepta first_name / last_name (columnas de la tabla `user` del servidor).
  */
 export function mapLoginResponse(json: any): Session {
   const u = json?.user ?? json?.data?.user ?? json?.data ?? json;
@@ -59,7 +59,7 @@ export function mapLoginResponse(json: any): Session {
     throw new ApiError('response', 'La respuesta del servidor no trae un número de usuario válido.');
   }
 
-  const joined = [u?.first_name, u?.last_name].filter((p) => typeof p === 'string' && p.trim()).join(' ');
+  const joined = [u?.firstname ?? u?.first_name, u?.lastname ?? u?.last_name].filter((p) => typeof p === 'string' && p.trim()).join(' ');
   const fullName = pickString(u?.full_name, u?.fullName, u?.nombre_completo, joined, u?.name, u?.nombre, u?.username);
 
   return {
@@ -81,6 +81,16 @@ export async function login(username: string, password: string): Promise<Session
     throw new ApiError('config', 'Falta configurar EXPO_PUBLIC_API_URL (ver README).');
   }
 
+  // La API espera el SHA-256 de la contraseña en hexadecimal y minúsculas.
+  const passHash = (await digestStringAsync(CryptoDigestAlgorithm.SHA256, password)).toLowerCase();
+  const body = [
+    [LOGIN_FIELDS.username, username],
+    [LOGIN_FIELDS.password, passHash],
+    [LOGIN_FIELDS.token, API_TOKEN],
+  ]
+    .map(([k, v]) => `${encodeURIComponent(k)}=${encodeURIComponent(v)}`)
+    .join('&');
+
   const controller = new AbortController();
   const timer = setTimeout(() => controller.abort(), REQUEST_TIMEOUT_MS);
 
@@ -88,8 +98,8 @@ export async function login(username: string, password: string): Promise<Session
   try {
     res = await fetch(`${API_BASE_URL}${LOGIN_PATH}`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
-      body: JSON.stringify({ [LOGIN_FIELDS.username]: username, [LOGIN_FIELDS.password]: password }),
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded', Accept: 'application/json' },
+      body,
       signal: controller.signal,
     });
   } catch {
@@ -102,7 +112,6 @@ export async function login(username: string, password: string): Promise<Session
   }
 
   if (res.status === 400 || res.status === 401 || res.status === 403) {
-    // TODO(equipo): confirmar qué código regresa la API con credenciales inválidas.
     throw new ApiError('credentials', 'Usuario o contraseña incorrectos.');
   }
   if (res.status === 404) {
@@ -112,11 +121,22 @@ export async function login(username: string, password: string): Promise<Session
     throw new ApiError('server', `El servidor respondió con error ${res.status}.`);
   }
 
-  let json: unknown;
+  let json: any;
   try {
     json = await res.json();
   } catch {
     throw new ApiError('response', 'La respuesta del servidor no es JSON válido.');
+  }
+
+  // MonsterBallGo responde los errores con HTTP 200 y un campo "error".
+  if (typeof json?.error === 'string') {
+    if (json.error === 'Failed to login') {
+      throw new ApiError('credentials', 'Usuario o contraseña incorrectos.');
+    }
+    throw new ApiError('server', `El servidor rechazó la petición: ${json.error}`);
+  }
+  if (json?.id == null || json.id === '') {
+    throw new ApiError('credentials', 'Usuario o contraseña incorrectos.');
   }
   return mapLoginResponse(json);
 }
